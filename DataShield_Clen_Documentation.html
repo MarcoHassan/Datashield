@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-07 Wed 14:42 -->
+<!-- 2020-10-07 Wed 15:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -253,12 +253,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge1d7505">A quick Overview of the Service</a></li>
-<li><a href="#org8077efb">Prerequisites</a></li>
-<li><a href="#org4bdfb55">Set up your Kubernetes Cluster</a></li>
-<li><a href="#orga45496a">Cluster Configuration</a></li>
-<li><a href="#org5858473">Adding the necessary helm-charts to your Cluster</a></li>
-<li><a href="#org5221e9b">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#orgfea9b93">A quick Overview of the Service</a></li>
+<li><a href="#orgedf5b27">Prerequisites</a></li>
+<li><a href="#orgece5376">Set up your Kubernetes Cluster</a></li>
+<li><a href="#orgc85b28d">Cluster Configuration</a></li>
+<li><a href="#org92cecca">Adding the necessary helm-charts to your Cluster</a></li>
+<li><a href="#org1136322">Creating your image registry on IBM cloud</a></li>
+<li><a href="#org1a5bac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#orga836a65">Install the IBM Kubernetes Data Shield Chart</a></li>
+<li><a href="#orgd04bb3c">Convert an image into a SGX-complaint image and deploy it on your cluster</a></li>
 </ul>
 </div>
 </div>
@@ -300,9 +303,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-orge1d7505" class="outline-2">
-<h2 id="orge1d7505">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-orge1d7505">
+<div id="outline-container-orgfea9b93" class="outline-2">
+<h2 id="orgfea9b93">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-orgfea9b93">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -346,9 +349,10 @@ applications on your preferred container-management platform in minutes.
 </div>
 </div>
 
-<div id="outline-container-org8077efb" class="outline-2">
-<h2 id="org8077efb">Prerequisites</h2>
-<div class="outline-text-2" id="text-org8077efb">
+
+<div id="outline-container-orgedf5b27" class="outline-2">
+<h2 id="orgedf5b27">Prerequisites</h2>
+<div class="outline-text-2" id="text-orgedf5b27">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -433,9 +437,9 @@ script above.
 </div>
 
 
-<div id="outline-container-org4bdfb55" class="outline-2">
-<h2 id="org4bdfb55">Set up your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-org4bdfb55">
+<div id="outline-container-orgece5376" class="outline-2">
+<h2 id="orgece5376">Set up your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-orgece5376">
 <p>
 Notice: In order to leverage the IBM Data Shield service you it will
 be necessary for you to deploy a bare metal Kubernetes server
@@ -452,9 +456,10 @@ i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
 </div>
 
 
-<div id="outline-container-orga45496a" class="outline-2">
-<h2 id="orga45496a">Cluster Configuration</h2>
-<div class="outline-text-2" id="text-orga45496a">
+
+<div id="outline-container-orgc85b28d" class="outline-2">
+<h2 id="orgc85b28d">Cluster Configuration</h2>
+<div class="outline-text-2" id="text-orgc85b28d">
 <p>
 After provisioning the above cluster you should receive an E-mail a
 couple of hours later, when your cluster is up and running.
@@ -547,9 +552,10 @@ Resource Group Name:            Default
 </div>
 </div>
 
-<div id="outline-container-org5858473" class="outline-2">
-<h2 id="org5858473">Adding the necessary helm-charts to your Cluster</h2>
-<div class="outline-text-2" id="text-org5858473">
+
+<div id="outline-container-org92cecca" class="outline-2">
+<h2 id="org92cecca">Adding the necessary helm-charts to your Cluster</h2>
+<div class="outline-text-2" id="text-org92cecca">
 <p>
 For running datashield, you will then be asked to install a couple of
 helm charts on your cluster. These will be necessary for the proper
@@ -638,22 +644,361 @@ chart in the cert-manager namespace
 </div>
 </div>
 
-<div id="outline-container-org5221e9b" class="outline-2">
-<h2 id="org5221e9b">Create a Kubectl Secret to interact with your Cluster at a later stage.</h2>
-<div class="outline-text-2" id="text-org5221e9b">
+
+<div id="outline-container-org1136322" class="outline-2">
+<h2 id="org1136322">Creating your image registry on IBM cloud</h2>
+<div class="outline-text-2" id="text-org1136322">
+<p>
+So far so good.
+</p>
+
+<p>
+In this section we will create an IBM container registry where you can
+upload your docker images. 
+</p>
+
+<p>
+This will be a private registry so that you can keep your code
+proprietary.
+</p>
+
+<p>
+Again you will need the container-registry ibmcloud CLI plug-in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr login
+</pre>
+</div>
+
+<p>
+You can then select a region where to host your registry. This you
+will need to pass at a later stage when creating a kubernetes secret
+in order to interact with the registry.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr region-set
+</pre>
+</div>
+
+<pre class="example">
+1. ap-north ('jp.icr.io')
+2. ap-south ('au.icr.io')
+3. eu-central ('de.icr.io')
+4. global ('icr.io')
+5. uk-south ('uk.icr.io')
+6. us-south ('us.icr.io')
+Enter a number ()&gt; 3
+The region is set to 'eu-central', the registry is 'de.icr.io'.
+
+OK
+</pre>
+
+<p>
+You will then add a namespace to the registry endpoint. You will then
+have access to such namespace and manage your docker images from there.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr namespace-add datashield_mahass
+</pre>
+</div>
+
+<p>
+Check the successful creation of the namespace
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr namespace-list
+</pre>
+</div>
+
+<pre class="example">
+Listing namespaces for account 'IBM' in registry 'de.icr.io'...
+
+Namespace   
+datashield_mahass   
+
+OK
+</pre>
+
+<p>
+You can now add images to your namespace and check what is available
+on your registry
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr image-list
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org1a5bac6" class="outline-2">
+<h2 id="org1a5bac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</h2>
+<div class="outline-text-2" id="text-org1a5bac6">
 <p>
 In this section you will create a IAM service-id and give it a
-reader and writer 
+reader and writer permission to operate on your cluster. You will
+then use the created API key to when issuing the commands to convert
+existing docker images into SGX-compliant images. You will in fact
+pass the API key to a kubernetes secret that you will use when
+converting images on your cluster by accessing the previously
+created container registry.
 </p>
+
+<p>
+<b>Important!</b> It is essential to notice that you should create such
+kubernetes secret before installing the IBM data shield helm
+chart. This will refer in fact to the created kubernetes service.<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+
+<p>
+Create a IAM service to interact with your cluster
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud iam service-id-create data-shield-container-converter -d <span style="color: #bcd42a;">'IBM Cloud Data Shield Container Converter'</span>
+</pre>
 </div>
+
+<p>
+Create an Api-key for that service 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud iam service-api-key-create <span style="color: #bcd42a;">'IBM Cloud Data Shield Container Converter'</span> data-shield-container-converter
+</pre>
+</div>
+
+<pre class="example">
+Creating API key Data Shield Container Converter of service ID data-shield-container-converter under account &lt;XXX&gt; as Marco.Hassan@ibm.com...                                                                                                                             
+OK
+Service ID API key Data Shield Container Converter is created
+
+Please preserve the API key! It cannot be retrieved after it's created.
+                 
+ID            ApiKey-1eaab4fb-3d2e-4937-b4e4-0684f1d4a91c   
+Name          Data Shield Container Converter   
+Description      
+Created At    2020-09-24T12:46+0000   
+API Key       &lt;READ YOUR API KEY FROM HERE&gt;   
+Locked        false   
+</pre>
+
+
+<p>
+Notice that the Api key was removed from the above for security
+reasons. You will find it at the <code>&lt;READ YOUR API KEY FROM HERE&gt;</code>
+above. Make a note of it as you will need it shortly when creating
+the kubernetes secret.
+</p>
+
+<p>
+Create a IAM policy specifying the policy for which you can interact
+to your cluster with the IAM service
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud iam service-policy-create data-shield-container-converter --roles Reader,Writer --service-name container-registry
+</pre>
+</div>
+
+<p>
+Create a Kubernetes secret to be used for future conversions. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  <span style="color: #51afef;">(</span><span style="color: #ff5d38;">echo</span> -n <span style="color: #bcd42a;">'{"auths":{"&lt;ENTER YOUR CONTAINER REGISTRY REGION HERE&gt;.icr.io":{"auth":"'</span>; <span style="color: #ff5d38;">echo</span> -n <span style="color: #bcd42a;">'iamapikey:&lt;ENTER HERE YOUR API KEY FOR THE IAM SERVICE ABOVE&gt;'</span> | openssl base64 -A;  <span style="color: #ff5d38;">echo</span> <span style="color: #bcd42a;">'"}}}'</span><span style="color: #51afef;">)</span> | kubectl create secret generic converter-docker-config --from-file=.dockerconfigjson=/dev/stdin
+</pre>
+</div>
+
+<p>
+Where the container registry endpoint is the region you selected for
+your image repository in the previous section. In my case hence
+<code>de</code>, such that the above becomes <code>de.icr.io</code> and the API key is the
+one you generated right above.
+</p>
+
+<p>
+You can then verify the existence of your kubernetes secret by 
+running
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  kubectl create secret generic converter-docker-config
+</pre>
+</div>
+
+<pre class="example">
+{                                                                                                                                               
+    "apiVersion": "v1",                                                                                                                         
+    "data": {
+        ".dockerconfigjson": &lt;base-64 authorization string passed above&gt;
+    },
+    "kind": "Secret",
+    "metadata": {
+        "creationTimestamp": "2020-10-01T14:13:50Z",
+        "name": "converter-docker-config",
+        "namespace": "default",
+        "resourceVersion": "3918214",
+        "selfLink": "/api/v1/namespaces/default/secrets/converter-docker-config",
+        "uid": "661fd885-e0c9-4212-93a7-849681cd504b"
+    },
+    "type": "Opaque"
+}
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orga836a65" class="outline-2">
+<h2 id="orga836a65">Install the IBM Kubernetes Data Shield Chart</h2>
+<div class="outline-text-2" id="text-orga836a65">
+<p>
+Good, you are all set. You can now, get the necessary information
+about your cluster and install the Data Shield Chart on your
+Cluster.
+</p>
+
+<p>
+First of all get your IBM account HEX number
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud account show
+</pre>
+</div>
+
+<pre class="example">
+Retrieving account IBM of Marco.Hassan@ibm.com...
+OK
+                                       
+Account Name:                       IBM   
+Account ID:                         &lt;HERE YOU FIND THE HEX ACCOUNT NUMBER&gt;
+Account Owner:                      marco.hassan@ibm.com   
+Account Type:                       PAYG   
+Account Status:                     ACTIVE   
+Linked Softlayer Account:           xxx   
+VRF Enabled:                        false   
+Service Endpoint Enabled:           false   
+EU Supported                        false   
+PoC (Commercial Proof of Concept)   false   
+HIPAA Supported                     false   
+</pre>
+
+<p>
+Secondly get the Ingress Subdomain of your cluster, by running again
+the command
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud ks cluster get --cluster bti5pcef0j3046qt1ks0
+</pre>
+</div>
+
+<pre class="example">
+
+......
+
+Ingress Subdomain:              mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud   
+
+......
+
+</pre>
+
+<p>
+Finally install the datashield chart in the default namespace of your
+cluster
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">helm install myshield iks-charts/ibmcloud-data-shield --set enclaveos-chart.Manager.AdminEmail=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminName=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminIBMAccountId=&lt;ENTER PREVIOUSLY OBTAINED HEX&gt; --set global.IngressDomain=mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud --set converter-chart.Converter.DockerConfigSecret=converter-docker-config
+</pre>
+</div>
+
+<p>
+Fantastic, if that worked you are good to go.
+</p>
+
+<p>
+Check that all of the pods are running correctly
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl get pods
+</pre>
+</div>
+
+<pre class="example">
+NAME                                                            READY   STATUS      RESTARTS   AGE
+data-shield-setup-q4rng                                         0/1     Completed   0          26m
+pmyshield-enclaveos-agent-mhn55                                  2/2     Running     2          26m
+myshield-enclaveos-cockroachdb-0                                1/1     Running     0          26m
+myshield-enclaveos-cockroachdb-init-wb8cm                       0/1     Completed   0          26m
+myshield-enclaveos-cockroachdb-status-checker-86bdff5ff-7rz29   1/1     Running     0          26m
+myshield-enclaveos-converter-76947448b7-cmvrn                   2/2     Running     0          26m
+myshield-enclaveos-dkms-z4xll                                   1/1     Running     2          26m
+myshield-enclaveos-frontend-868b5dbc5c-68ww6                    1/1     Running     0          26m
+myshield-enclaveos-manager-0                                    2/2     Running     1          26m
+myshield-sgx-6j87h                                              1/1     Running     1          26m
+myshield-sgx-device-plugin-hp2rf                                1/1     Running     0          26m
+</pre>
+
+<p>
+Moreover you can get the link to your datashield UI by:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">helm status myshield                                                                                                                            
+</pre>
+</div>
+
+<pre class="example">
+NAME: myshield
+LAST DEPLOYED: Fri Sep 18 14:42:52 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Thank you for installing ibmcloud-data-shield.
+
+Your release is named myshield.
+
+To learn more about the release, try:
+
+  $ helm status myshield
+  $ helm get myshield
+
+You can access the Enclave Manager web console at https://enclave-manager.mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud
+
+Documentation may be found at https://console.bluemix.net/docs/services/data-shield/index.html
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgd04bb3c" class="outline-2">
+<h2 id="orgd04bb3c">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-The interested reader that wants to go deeper in the technicalities of
-SGX might refer to <a href="https://www.youtube.com/watch?v=mPT_vJrlHlg&amp;t=2502s">this video</a>.
+The interested reader that wants to go deeper in the
+technicalities of SGX might refer to <a href="https://www.youtube.com/watch?v=mPT_vJrlHlg&amp;t=2502s">this video</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Should you be creating the kubernetes secret after having
+installed your datashield IBM helm chart, you will need to remove
+the <code>myshield-enclaveos-converter-xxx</code> pod from your cluster and
+wait until the deployment file creates a new pod that refers to the
+newly created secret.
 </p></div></div>
 
 
@@ -662,7 +1007,7 @@ SGX might refer to <a href="https://www.youtube.com/watch?v=mPT_vJrlHlg&amp;t=25
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-07 Wed 14:42</p>
+<p class="date">Created: 2020-10-07 Wed 15:55</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
