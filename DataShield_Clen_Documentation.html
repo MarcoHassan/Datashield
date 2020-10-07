@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-07 Wed 11:42 -->
+<!-- 2020-10-07 Wed 14:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -253,9 +253,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1e08cbd">A quick Overview of the Service</a></li>
-<li><a href="#org5a1115d">Prerequisites</a></li>
-<li><a href="#orgc076e3a">Set up your Kubernetes Cluster</a></li>
+<li><a href="#org231e021">A quick Overview of the Service</a></li>
+<li><a href="#org5073a00">Prerequisites</a></li>
+<li><a href="#org540d0eb">Set up your Kubernetes Cluster</a></li>
+<li><a href="#org5721a49">Cluster Configuration</a></li>
+<li><a href="#org06055a8">Adding the necessary helm-charts to your Cluster</a></li>
 </ul>
 </div>
 </div>
@@ -295,9 +297,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-org1e08cbd" class="outline-2">
-<h2 id="org1e08cbd">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-org1e08cbd">
+<div id="outline-container-org231e021" class="outline-2">
+<h2 id="org231e021">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org231e021">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -341,10 +343,9 @@ applications on your preferred container-management platform in minutes.
 </div>
 </div>
 
-
-<div id="outline-container-org5a1115d" class="outline-2">
-<h2 id="org5a1115d">Prerequisites</h2>
-<div class="outline-text-2" id="text-org5a1115d">
+<div id="outline-container-org5073a00" class="outline-2">
+<h2 id="org5073a00">Prerequisites</h2>
+<div class="outline-text-2" id="text-org5073a00">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -428,18 +429,144 @@ script above.
 </div>
 </div>
 
-<div id="outline-container-orgc076e3a" class="outline-2">
-<h2 id="orgc076e3a">Set up your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-orgc076e3a">
+
+<div id="outline-container-org540d0eb" class="outline-2">
+<h2 id="org540d0eb">Set up your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-org540d0eb">
 <p>
 Notice: In order to leverage the IBM Data Shield service you it will
 be necessary for you to deploy a bare metal Kubernetes server
 running SGX enabled processors. Moreover, to the present stage you
-will have to select a cluster running on the Ubuntu 16 OS.
+will have to select a cluster running on the Ubuntu 16 OS,
+i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
+<code>mb2c.4x32.1.9tb.ssd</code> model.
 </p>
 
 <div class="container"> 
   <iframe class="responsive-iframe" src="https://www.youtube.com/embed/pEA1y9c_xqs" frameborder="0" allowfullscreen;> </iframe>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5721a49" class="outline-2">
+<h2 id="org5721a49">Cluster Configuration</h2>
+<div class="outline-text-2" id="text-org5721a49">
+<p>
+After provisioning the above cluster you should receive an E-mail a
+couple of hours later, when your cluster is up and running.
+</p>
+
+<p>
+You should be then be able to find your cluster via the IBM
+kubernetes CLI plug-in.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"> ibmcloud ks cluster ls
+</pre>
+</div>
+
+<p>
+You can read from the above the ID of your cluster as well as it's
+<i>state</i>. This should be in the normal state as in the above case.
+</p>
+
+<p>
+Through the above cluster-ID it is then possible to connect your
+local kubernetes CLI with the created cluster. In such a way you will
+be able to operate on your cluster via the kubernetes CLI locally. 
+</p>
+
+<p>
+In order to do that, you can run the following command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"> ibmcloud ks cluster config --cluster bti5pcef0j3046qt1ks0                                                                                        &lt;
+</pre>
+</div>
+
+<pre class="example">
+ OK
+ The configuration for bti5pcef0j3046qt1ks0 was downloaded successfully.
+
+ Added context for bti5pcef0j3046qt1ks0 to the current kubeconfig file.
+ You can now execute 'kubectl' commands against your cluster. For example, run 'kubectl get nodes'.
+</pre>
+
+<p>
+You can then verify that your CLI is correctly configured with your
+cluster by running
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"> kubectl cluster-info
+</pre>
+</div>
+
+<p>
+You can then compare this information with the one obtained through
+the ibmcloud kubernetes CLI plug-in
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud ks cluster get --cluster bti5pcef0j3046qt1ks0                                                                                          
+</pre>
+</div>
+
+<pre class="example">
+Retrieving cluster bti5pcef0j3046qt1ks0...
+OK
+                                   
+Name:                           mycluster-fra02-mb2c.Datashield   
+ID:                             bti5pcef0j3046qt1ks0   
+State:                          normal   
+Created:                        2020-09-18T07:07:29+0000   
+Location:                       fra02   
+Master URL:                     https://c106.eu-de.containers.cloud.ibm.com:31398   
+Public Service Endpoint URL:    https://c106.eu-de.containers.cloud.ibm.com:31398   
+Private Service Endpoint URL:   -   
+Master Location:                Frankfurt   
+Master Status:                  Ready (1 week ago)   
+Master State:                   deployed   
+Master Health:                  normal   
+Ingress Subdomain:              mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud   
+Ingress Secret:                 mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000   
+Workers:                        1   
+Worker Zones:                   fra02   
+Version:                        1.17.12_1540   
+Creator:                        -   
+Monitoring Dashboard:           -   
+Resource Group ID:              f274228d8aa542fb8d3d120e7215071d   
+Resource Group Name:            Default   
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org06055a8" class="outline-2">
+<h2 id="org06055a8">Adding the necessary helm-charts to your Cluster</h2>
+<div class="outline-text-2" id="text-org06055a8">
+<p>
+For running datashield, you will then be asked to install a couple of
+helm charts on your cluster. These will be necessary for the proper
+configuration of your service.
+</p>
+
+<p>
+Helm charts, are kubernetes resources which are packaged together in
+an easy to deploy way for developers. You can think them in terms of
+libraries that deploy kubernetes resources.
+</p>
+
+<p>
+In order to do that by following this documentation make sure that you
+are using the helm cli in it's third version
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">helm version
+</pre>
 </div>
 </div>
 </div>
@@ -458,7 +585,7 @@ SGX might refer to <a href="https://www.youtube.com/watch?v=mPT_vJrlHlg&amp;t=25
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-07 Wed 11:42</p>
+<p class="date">Created: 2020-10-07 Wed 14:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
