@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-07 Wed 11:38 -->
+<!-- 2020-10-07 Wed 11:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -249,13 +249,216 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</h1>
-<p>
-allowfullscreen</p>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1e08cbd">A quick Overview of the Service</a></li>
+<li><a href="#org5a1115d">Prerequisites</a></li>
+<li><a href="#orgc076e3a">Set up your Kubernetes Cluster</a></li>
+</ul>
 </div>
+</div>
+<style>
+.container {
+  position: relative;
+  left: 15%;
+  width: 70%;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  display:block;
+  overflow-y: hidden;
+}
+
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display:block;
+  overflow-y: hidden;
+}
+</style>
+
+<br>
+<br>
+
+<p>
+<i>Disclaimer: This is not an official documentation and is not maintained. It is rather ment to be a support to the <a href="https://cloud.ibm.com/docs/data-shield?topic=data-shield-getting-started">existing official
+documentation</a> to the present state - October 2020.</i> 
+</p>
+
+<br>
+<br>
+
+<div id="outline-container-org1e08cbd" class="outline-2">
+<h2 id="org1e08cbd">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org1e08cbd">
+<p>
+The essential idea of IBM Data Shield is the one of partnering with
+Fortanix to offer an easy to use service in order to protect your
+applications via Software Guard Extensions enabled Intel processors. 
+</p>
+
+<p>
+The idea is that through the extension/remodularization of the
+processor architecture it is possible to deploy an application in a so
+called <i>enclave</i>, i.e. a hardware defined protected environment. In
+such a way your OS or VMM will be just able to page in and out the
+application enclaves, however they will not be allowed to access the
+data of the runtime or to tamper them.
+</p>
+
+<p>
+The result is a highly reduced attack surface for a malicious
+entity. Even if your infrastructure level security fails and you loose
+control over the OS/BIOS/Drivers your data will be protected as it
+won't be possible to read out data running on enclaves. <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<p>
+IBM partnered with Fortanix to offer the solution above in order to
+increase the achievable security level of cloud applications and make
+new businesses models possible. 
+</p>
+
+<p>
+Through the mentioned partnership, the IBM Data Shield solution will
+make it possible for you to convert any docker image into
+SGX-compliant images in minutes without changing a single line of
+code. It will then be possible for you as an operator to leverage the
+full fledge power of SGX architectures and by deploy runtime encrypted
+applications on your preferred container-management platform in minutes.
+</p>
+
+<div class="container"> 
+  <iframe class="responsive-iframe" src="https://player.vimeo.com/video/203331381" frameborder="0" allowfullscreen;> </iframe>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5a1115d" class="outline-2">
+<h2 id="org5a1115d">Prerequisites</h2>
+<div class="outline-text-2" id="text-org5a1115d">
+<p>
+Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  curl -sL https://ibm.biz/idt-installer | bash
+</pre>
+</div>
+
+<p>
+The above will install IBMCloud together with a couple of CLI useful for every developer. 
+In particular it will install:
+</p>
+
+<pre class="example">
+  - Homebrew (Mac only)
+  - Git
+  - Docker
+  - Helm
+  - kubectl
+  - curl (Linux™ only)
+  - IBM Cloud Developer Tools plug-in
+  - IBM Cloud Functions plug-in
+  - IBM Cloud Object Storage plug-in
+  - IBM Cloud Container Registry plug-in
+  - IBM Cloud Kubernetes Service plug-in
+</pre>
+
+
+<p>
+Another option will be the one of installing the necessary tools:
+</p>
+
+<ul class="org-ul">
+<li>IBM Cloud</li>
+<li>Kubernetes</li>
+<li>Docker</li>
+<li>Helm</li>
+<li>Kubernetes Service (ibmcloud plugin)</li>
+<li>Container Registry (ibmcloud plugin)</li>
+</ul>
+
+<p>
+individually.
+</p>
+
+<p>
+A good place to get started in this sense is to login in the IBM cloud via CLI through 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud login <span style="color: #51afef;">[</span>-a API_ENDPOINT<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--sso<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-u USERNAME<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-p PASSWORD<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--apikey KEY | @KEY_FILE<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--no-iam<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-c <span style="color: #c678dd;">(</span>ACCOUNT_ID | ACCOUNT_OWNER_USER_ID<span style="color: #c678dd;">)</span> | --no-account<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-g <span style="color: #c678dd;">(</span>RESOURCE_GROUP_NAME | RESOURCE_GROUP_ID<span style="color: #c678dd;">)</span><span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-r REGION | --no-region<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-o ORG<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-s SPACE<span style="color: #51afef;">]</span>
+</pre>
+</div>
+
+<p>
+and look at the available <i>plug-ins</i>, the installed ones and the <i>available updates</i>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud plugin repo-plugins -r <span style="color: #bcd42a;">"IBM Cloud"</span>
+</pre>
+</div>
+
+<p>
+You can then install ibmcloud plugins through 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  ibmcloud plugin install container-registry
+
+  ibmcloud plugin install kubernetes-service
+</pre>
+</div>
+
+<p>
+Moreover, you can install the necessary Kubernetes, Docker and Helm
+CLI from the internet should you not be willing of running the bash
+script above.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc076e3a" class="outline-2">
+<h2 id="orgc076e3a">Set up your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-orgc076e3a">
+<p>
+Notice: In order to leverage the IBM Data Shield service you it will
+be necessary for you to deploy a bare metal Kubernetes server
+running SGX enabled processors. Moreover, to the present stage you
+will have to select a cluster running on the Ubuntu 16 OS.
+</p>
+
+<div class="container"> 
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/pEA1y9c_xqs" frameborder="0" allowfullscreen;> </iframe>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+The interested reader that wants to go deeper in the technicalities of
+SGX might refer to <a href="https://www.youtube.com/watch?v=mPT_vJrlHlg&amp;t=2502s">this video</a>.
+</p></div></div>
+
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-07 Wed 11:38</p>
+<p class="date">Created: 2020-10-07 Wed 11:42</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
