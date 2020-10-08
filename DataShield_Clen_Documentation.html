@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-08 Thu 13:33 -->
+<!-- 2020-10-08 Thu 15:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -253,22 +253,22 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0a685fe">A quick Overview of the Service</a></li>
-<li><a href="#org3ea7bd8">Deploy the Data Shield Service on your Kubernetes Cluster</a>
+<li><a href="#org8571b24">A quick Overview of the Service</a></li>
+<li><a href="#org92ed846">Deploy the Data Shield Service on your Kubernetes Cluster</a>
 <ul>
-<li><a href="#orgbf7986a">Prerequisites</a></li>
-<li><a href="#orgd031e3a">Set up your Kubernetes Cluster</a></li>
-<li><a href="#org5993623">Cluster Configuration</a></li>
-<li><a href="#orgb9d8827">Adding the necessary helm-charts to your Cluster</a></li>
-<li><a href="#orgb3525d5">Creating your image registry on IBM cloud</a></li>
-<li><a href="#orgdd1bceb">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
-<li><a href="#orge6d5bb8">Install the IBM Kubernetes Data Shield Chart</a></li>
+<li><a href="#orgb268dad">Prerequisites</a></li>
+<li><a href="#orga60c91f">Set up your Kubernetes Cluster</a></li>
+<li><a href="#orgcd4b691">Cluster Configuration</a></li>
+<li><a href="#org4a69d4b">Adding the necessary helm-charts to your Cluster</a></li>
+<li><a href="#org7ec30ec">Creating your image registry on IBM cloud</a></li>
+<li><a href="#org95d711b">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#orgbe62677">Install the IBM Kubernetes Data Shield Chart</a></li>
 </ul>
 </li>
-<li><a href="#org1cc6036">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
+<li><a href="#orgef687d9">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
 <ul>
-<li><a href="#org392d9a1">Via UI</a></li>
-<li><a href="#org30bfbed">Via CLI</a></li>
+<li><a href="#org5986c15">Via UI</a></li>
+<li><a href="#org6c60a40">Via CLI</a></li>
 </ul>
 </li>
 </ul>
@@ -312,9 +312,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-org0a685fe" class="outline-2">
-<h2 id="org0a685fe">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-org0a685fe">
+<div id="outline-container-org8571b24" class="outline-2">
+<h2 id="org8571b24">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org8571b24">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -358,13 +358,14 @@ applications on your preferred container-management platform in minutes.
 </div>
 </div>
 
-<div id="outline-container-org3ea7bd8" class="outline-2">
-<h2 id="org3ea7bd8">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-org3ea7bd8">
+
+<div id="outline-container-org92ed846" class="outline-2">
+<h2 id="org92ed846">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-org92ed846">
 </div>
-<div id="outline-container-orgbf7986a" class="outline-3">
-<h3 id="orgbf7986a">Prerequisites</h3>
-<div class="outline-text-3" id="text-orgbf7986a">
+<div id="outline-container-orgb268dad" class="outline-3">
+<h3 id="orgb268dad">Prerequisites</h3>
+<div class="outline-text-3" id="text-orgb268dad">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -449,9 +450,9 @@ script above.
 </div>
 
 
-<div id="outline-container-orgd031e3a" class="outline-3">
-<h3 id="orgd031e3a">Set up your Kubernetes Cluster</h3>
-<div class="outline-text-3" id="text-orgd031e3a">
+<div id="outline-container-orga60c91f" class="outline-3">
+<h3 id="orga60c91f">Set up your Kubernetes Cluster</h3>
+<div class="outline-text-3" id="text-orga60c91f">
 <p>
 Notice: In order to leverage the IBM Data Shield service you it will
 be necessary for you to deploy a bare metal Kubernetes server
@@ -469,9 +470,9 @@ i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
 
 
 
-<div id="outline-container-org5993623" class="outline-3">
-<h3 id="org5993623">Cluster Configuration</h3>
-<div class="outline-text-3" id="text-org5993623">
+<div id="outline-container-orgcd4b691" class="outline-3">
+<h3 id="orgcd4b691">Cluster Configuration</h3>
+<div class="outline-text-3" id="text-orgcd4b691">
 <p>
 After provisioning the above cluster you should receive an E-mail a
 couple of hours later, when your cluster is up and running.
@@ -581,9 +582,9 @@ Resource Group Name:            Default
 </div>
 
 
-<div id="outline-container-orgb9d8827" class="outline-3">
-<h3 id="orgb9d8827">Adding the necessary helm-charts to your Cluster</h3>
-<div class="outline-text-3" id="text-orgb9d8827">
+<div id="outline-container-org4a69d4b" class="outline-3">
+<h3 id="org4a69d4b">Adding the necessary helm-charts to your Cluster</h3>
+<div class="outline-text-3" id="text-org4a69d4b">
 <p>
 For running datashield, you will then be asked to install a couple of
 helm charts on your cluster. These will be necessary for the proper
@@ -683,9 +684,9 @@ chart in the cert-manager namespace
 </div>
 
 
-<div id="outline-container-orgb3525d5" class="outline-3">
-<h3 id="orgb3525d5">Creating your image registry on IBM cloud</h3>
-<div class="outline-text-3" id="text-orgb3525d5">
+<div id="outline-container-org7ec30ec" class="outline-3">
+<h3 id="org7ec30ec">Creating your image registry on IBM cloud</h3>
+<div class="outline-text-3" id="text-org7ec30ec">
 <p>
 So far so good.
 </p>
@@ -774,9 +775,9 @@ on your registry
 </div>
 
 
-<div id="outline-container-orgdd1bceb" class="outline-3">
-<h3 id="orgdd1bceb">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
-<div class="outline-text-3" id="text-orgdd1bceb">
+<div id="outline-container-org95d711b" class="outline-3">
+<h3 id="org95d711b">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
+<div class="outline-text-3" id="text-org95d711b">
 <p>
 In this section you will create a IAM service-id and give it a
 reader and writer permission to operate on your cluster. You will
@@ -892,9 +893,9 @@ running
 </div>
 
 
-<div id="outline-container-orge6d5bb8" class="outline-3">
-<h3 id="orge6d5bb8">Install the IBM Kubernetes Data Shield Chart</h3>
-<div class="outline-text-3" id="text-orge6d5bb8">
+<div id="outline-container-orgbe62677" class="outline-3">
+<h3 id="orgbe62677">Install the IBM Kubernetes Data Shield Chart</h3>
+<div class="outline-text-3" id="text-orgbe62677">
 <p>
 Good, you are all set. You can now, get the necessary information
 about your cluster and install the Data Shield Chart on your
@@ -1020,9 +1021,9 @@ Documentation may be found at https://console.bluemix.net/docs/services/data-shi
 </div>
 
 
-<div id="outline-container-org1cc6036" class="outline-2">
-<h2 id="org1cc6036">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
-<div class="outline-text-2" id="text-org1cc6036">
+<div id="outline-container-orgef687d9" class="outline-2">
+<h2 id="orgef687d9">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
+<div class="outline-text-2" id="text-orgef687d9">
 <p>
 Good now that your cluster is up an running with the data shield
 service you can convert a docker image of your choice.
@@ -1155,18 +1156,18 @@ Data Shield API.
 </p>
 </div>
 
-<div id="outline-container-org392d9a1" class="outline-3">
-<h3 id="org392d9a1">Via UI</h3>
-<div class="outline-text-3" id="text-org392d9a1">
+<div id="outline-container-org5986c15" class="outline-3">
+<h3 id="org5986c15">Via UI</h3>
+<div class="outline-text-3" id="text-org5986c15">
 <div class="container"> 
   <iframe class="responsive-iframe" src="https://www.youtube.com/embed/Oixdcha11h4" frameborder="0" allowfullscreen;> </iframe>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org30bfbed" class="outline-3">
-<h3 id="org30bfbed">Via CLI</h3>
-<div class="outline-text-3" id="text-org30bfbed">
+<div id="outline-container-org6c60a40" class="outline-3">
+<h3 id="org6c60a40">Via CLI</h3>
+<div class="outline-text-3" id="text-org6c60a40">
 <p>
 In order to convert the images via CLI you can pass the necessary
 parameters together with an authentication token to the converter API
@@ -1199,8 +1200,45 @@ image output name as well as the cluster ingress point + api route
 
 <p>
 You can finally run the image on your cluster by running the
-deployment and services <code>yaml</code> files in the repository. 
+deployment and services <code>yaml</code> files in the repository.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl get pods -o wide                                                                                                                                             
+</pre>
+</div>
+
+<pre class="example">
+NAME                                                            READY   STATUS      RESTARTS   AGE     IP              NODE            NOMINATED NODE   READINESS GATES
+data-shield-setup-q4rng                                         0/1     Completed   0          20d     172.30.128.18   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+java-hello-world                                                0/1     Completed   0          14d     172.30.128.34   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myflaskapp-deploy-84dffc55df-jdrbc                              1/1     Running     0          167m    172.30.128.49   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-agent-mhn55                                  2/2     Running     2          20d     10.215.171.81   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-cockroachdb-0                                1/1     Running     0          20d     172.30.128.24   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-cockroachdb-init-wb8cm                       0/1     Completed   0          20d     172.30.128.22   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-cockroachdb-status-checker-86bdff5ff-7rz29   1/1     Running     0          20d     172.30.128.21   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-converter-76947448b7-7b2vf                   2/2     Running     0          6d22h   172.30.128.41   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-dkms-z4xll                                   1/1     Running     2          20d     10.215.171.81   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-frontend-868b5dbc5c-68ww6                    1/1     Running     0          20d     172.30.128.19   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-enclaveos-manager-0                                    2/2     Running     1          20d     172.30.128.25   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-sgx-6j87h                                              1/1     Running     1          20d     10.215.171.81   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+myshield-sgx-device-plugin-hp2rf                                1/1     Running     0          20d     172.30.128.20   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+sgx-flask-dashboard-5c968f5c5b-krvbd                            1/1     Running     0          7s      172.30.128.55   10.215.171.81   &lt;none&gt;           &lt;none&gt;
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl get deployments                                                                                                                                              
+</pre>
+</div>
+
+<pre class="example">
+NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+myflaskapp-deploy                               1/1     1            1           167m
+myshield-enclaveos-cockroachdb-status-checker   1/1     1            1           20d
+myshield-enclaveos-converter                    1/1     1            1           20d
+myshield-enclaveos-frontend                     1/1     1            1           20d
+sgx-flask-dashboard                             1/1     1            1           12s
+</pre>
 </div>
 </div>
 </div>
@@ -1227,7 +1265,7 @@ newly created secret.
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-08 Thu 13:33</p>
+<p class="date">Created: 2020-10-08 Thu 15:10</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
