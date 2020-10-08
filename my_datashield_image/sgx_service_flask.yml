@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sgx-myflaskapp-svc
+  labels:
+    app: sgx-flask-app
+spec:
+  type: LoadBalancer 
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: sgx-flask-app

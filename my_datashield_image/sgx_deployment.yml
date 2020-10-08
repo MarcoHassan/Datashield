@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sgx-flask-dashboard
+  labels:
+    app: sgx-flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sgx-flask-app      
+  template:
+    metadata:
+      labels:
+        app: sgx-flask-app
+    spec:
+      containers:
+      - name: sgx-flask-app
+        image: de.icr.io/datashield_mahass/sgx_flask_dashboard:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /dev/isgx
+          name: isgx
+        - mountPath: /dev/gsgx
+          name: gsgx
+        - mountPath: /var/run/aesmd/aesm.socket
+          name: aesm-socket
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: NODE_AGENT_BASE_URL
+          value: http://$(NODE_IP):9092/v1
+      volumes:
+      - name: isgx
+        hostPath:
+          path: /dev/isgx
+      - name: gsgx
+        hostPath:
+          path: /dev/gsgx
+      - name: aesm-socket
+        hostPath:
+          path: /var/run/aesmd/aesm.socket
+      restartPolicy: Always
