@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-07 Wed 15:55 -->
+<!-- 2020-10-08 Thu 13:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -253,15 +253,24 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfea9b93">A quick Overview of the Service</a></li>
-<li><a href="#orgedf5b27">Prerequisites</a></li>
-<li><a href="#orgece5376">Set up your Kubernetes Cluster</a></li>
-<li><a href="#orgc85b28d">Cluster Configuration</a></li>
-<li><a href="#org92cecca">Adding the necessary helm-charts to your Cluster</a></li>
-<li><a href="#org1136322">Creating your image registry on IBM cloud</a></li>
-<li><a href="#org1a5bac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
-<li><a href="#orga836a65">Install the IBM Kubernetes Data Shield Chart</a></li>
-<li><a href="#orgd04bb3c">Convert an image into a SGX-complaint image and deploy it on your cluster</a></li>
+<li><a href="#org0a685fe">A quick Overview of the Service</a></li>
+<li><a href="#org3ea7bd8">Deploy the Data Shield Service on your Kubernetes Cluster</a>
+<ul>
+<li><a href="#orgbf7986a">Prerequisites</a></li>
+<li><a href="#orgd031e3a">Set up your Kubernetes Cluster</a></li>
+<li><a href="#org5993623">Cluster Configuration</a></li>
+<li><a href="#orgb9d8827">Adding the necessary helm-charts to your Cluster</a></li>
+<li><a href="#orgb3525d5">Creating your image registry on IBM cloud</a></li>
+<li><a href="#orgdd1bceb">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#orge6d5bb8">Install the IBM Kubernetes Data Shield Chart</a></li>
+</ul>
+</li>
+<li><a href="#org1cc6036">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
+<ul>
+<li><a href="#org392d9a1">Via UI</a></li>
+<li><a href="#org30bfbed">Via CLI</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -303,9 +312,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-orgfea9b93" class="outline-2">
-<h2 id="orgfea9b93">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-orgfea9b93">
+<div id="outline-container-org0a685fe" class="outline-2">
+<h2 id="org0a685fe">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org0a685fe">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -349,10 +358,13 @@ applications on your preferred container-management platform in minutes.
 </div>
 </div>
 
-
-<div id="outline-container-orgedf5b27" class="outline-2">
-<h2 id="orgedf5b27">Prerequisites</h2>
-<div class="outline-text-2" id="text-orgedf5b27">
+<div id="outline-container-org3ea7bd8" class="outline-2">
+<h2 id="org3ea7bd8">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-org3ea7bd8">
+</div>
+<div id="outline-container-orgbf7986a" class="outline-3">
+<h3 id="orgbf7986a">Prerequisites</h3>
+<div class="outline-text-3" id="text-orgbf7986a">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -437,9 +449,9 @@ script above.
 </div>
 
 
-<div id="outline-container-orgece5376" class="outline-2">
-<h2 id="orgece5376">Set up your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-orgece5376">
+<div id="outline-container-orgd031e3a" class="outline-3">
+<h3 id="orgd031e3a">Set up your Kubernetes Cluster</h3>
+<div class="outline-text-3" id="text-orgd031e3a">
 <p>
 Notice: In order to leverage the IBM Data Shield service you it will
 be necessary for you to deploy a bare metal Kubernetes server
@@ -457,9 +469,9 @@ i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
 
 
 
-<div id="outline-container-orgc85b28d" class="outline-2">
-<h2 id="orgc85b28d">Cluster Configuration</h2>
-<div class="outline-text-2" id="text-orgc85b28d">
+<div id="outline-container-org5993623" class="outline-3">
+<h3 id="org5993623">Cluster Configuration</h3>
+<div class="outline-text-3" id="text-org5993623">
 <p>
 After provisioning the above cluster you should receive an E-mail a
 couple of hours later, when your cluster is up and running.
@@ -474,6 +486,12 @@ kubernetes CLI plug-in.
 <pre class="src src-sh"> ibmcloud ks cluster ls
 </pre>
 </div>
+
+<pre class="example">
+ OK
+ Name                              ID                     State    Created       Workers   Location    Version        Resource Group Name   Provider   
+ mycluster-fra02-mb2c.Datashield   bti5pcef0j3046qt1ks0   normal   2 weeks ago   1         Frankfurt   1.17.12_1540   Default               classic   
+</pre>
 
 <p>
 You can read from the above the ID of your cluster as well as it's
@@ -512,6 +530,16 @@ cluster by running
 <pre class="src src-sh"> kubectl cluster-info
 </pre>
 </div>
+
+<pre class="example">
+ Kubernetes master is running at https://c106.eu-de.containers.cloud.ibm.com:31398
+ CoreDNS is running at https://c106.eu-de.containers.cloud.ibm.com:31398/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+ kubernetes-dashboard is running at https://c106.eu-de.containers.cloud.ibm.com:31398/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy                          
+ Metrics-server is running at https://c106.eu-de.containers.cloud.ibm.com:31398/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+ NodeLocalDNS is running at https://c106.eu-de.containers.cloud.ibm.com:31398/api/v1/namespaces/kube-system/services/node-local-dns:dns/proxy
+
+ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+</pre>
 
 <p>
 You can then compare this information with the one obtained through
@@ -553,9 +581,9 @@ Resource Group Name:            Default
 </div>
 
 
-<div id="outline-container-org92cecca" class="outline-2">
-<h2 id="org92cecca">Adding the necessary helm-charts to your Cluster</h2>
-<div class="outline-text-2" id="text-org92cecca">
+<div id="outline-container-orgb9d8827" class="outline-3">
+<h3 id="orgb9d8827">Adding the necessary helm-charts to your Cluster</h3>
+<div class="outline-text-3" id="text-orgb9d8827">
 <p>
 For running datashield, you will then be asked to install a couple of
 helm charts on your cluster. These will be necessary for the proper
@@ -577,6 +605,10 @@ are using the helm client in it's third version
 <pre class="src src-sh">helm version
 </pre>
 </div>
+
+<pre class="example">
+version.BuildInfo{Version:"v3.2.3", GitCommit:"8f832046e258e2cb800894579b1b3b50c2d83492", GitTreeState:"clean", GoVersion:"go1.13.12"}
+</pre>
 
 <p>
 You will then be able to add to the client the IBM kubernetes helm
@@ -641,13 +673,19 @@ chart in the cert-manager namespace
 <pre class="src src-sh">kubectl get pods --namespace=cert-manager
 </pre>
 </div>
+
+<pre class="example">
+| NAME                                    | READY | STATUS  | RESTARTS | AGE |
+| cert-manager-87f84bbbb-m2ghd            | 1/1   | Running |        0 | 19d |
+| cert-manager-cainjector-98fb4f86c-brdd5 | 1/1   | Running |        1 | 19d |
+</pre>
 </div>
 </div>
 
 
-<div id="outline-container-org1136322" class="outline-2">
-<h2 id="org1136322">Creating your image registry on IBM cloud</h2>
-<div class="outline-text-2" id="text-org1136322">
+<div id="outline-container-orgb3525d5" class="outline-3">
+<h3 id="orgb3525d5">Creating your image registry on IBM cloud</h3>
+<div class="outline-text-3" id="text-orgb3525d5">
 <p>
 So far so good.
 </p>
@@ -736,9 +774,9 @@ on your registry
 </div>
 
 
-<div id="outline-container-org1a5bac6" class="outline-2">
-<h2 id="org1a5bac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</h2>
-<div class="outline-text-2" id="text-org1a5bac6">
+<div id="outline-container-orgdd1bceb" class="outline-3">
+<h3 id="orgdd1bceb">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
+<div class="outline-text-3" id="text-orgdd1bceb">
 <p>
 In this section you will create a IAM service-id and give it a
 reader and writer permission to operate on your cluster. You will
@@ -854,9 +892,9 @@ running
 </div>
 
 
-<div id="outline-container-orga836a65" class="outline-2">
-<h2 id="orga836a65">Install the IBM Kubernetes Data Shield Chart</h2>
-<div class="outline-text-2" id="text-orga836a65">
+<div id="outline-container-orge6d5bb8" class="outline-3">
+<h3 id="orge6d5bb8">Install the IBM Kubernetes Data Shield Chart</h3>
+<div class="outline-text-3" id="text-orge6d5bb8">
 <p>
 Good, you are all set. You can now, get the necessary information
 about your cluster and install the Data Shield Chart on your
@@ -979,10 +1017,192 @@ Documentation may be found at https://console.bluemix.net/docs/services/data-shi
 </pre>
 </div>
 </div>
+</div>
 
 
-<div id="outline-container-orgd04bb3c" class="outline-2">
-<h2 id="orgd04bb3c">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
+<div id="outline-container-org1cc6036" class="outline-2">
+<h2 id="org1cc6036">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
+<div class="outline-text-2" id="text-org1cc6036">
+<p>
+Good now that your cluster is up an running with the data shield
+service you can convert a docker image of your choice.
+</p>
+
+<p>
+For this tutorial I used the image build through <a href="https://github.com/MarcoHassan/Datashield/tree/main/my_datashield_image">this
+repository</a>. Notice that in the image you are not really leveraging
+any data or doing any kind of computation so using Data Shield for
+deployment is a bit of a moot point. However, you can think yourself
+how that would look if you would use such flask backend to perform
+some ML job on sensitive data or when deploying a database image.
+</p>
+
+<p>
+In order to demonstrate the point of the simplicity of converting
+and running images on your cluster in protected enclaves we will
+show how to convert the image above without loss of generality.
+</p>
+
+<p>
+First of all download the repository, then within it you can run
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">  docker build -t de.icr.io/datashield_mahass/falsk_dashboard:v1 .
+</pre>
+</div>
+
+<pre class="example">
+Sending build context to Docker daemon  3.993MB
+Step 1/9 : FROM python:3.7.5-stretch
+ ---&gt; 79d26a5ecb0f
+Step 2/9 : RUN apt-get update &amp;&amp; apt-get install -y python3-dev build-essential
+ ---&gt; Using cache
+ ---&gt; b4dd3a7b5ba8
+Step 3/9 : WORKDIR /app
+ ---&gt; Using cache
+ ---&gt; b29fa1a3d351
+Step 4/9 : ADD . /app
+ ---&gt; cccd75c67ef1
+Step 5/9 : RUN pip install --upgrade pip
+ ---&gt; Running in 63f9ceba9273
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/4e/5f/528232275f6509b1fff703c9280e58951a81abe24640905de621c9f81839/pip-20.2.3-py2.py3-none-any.whl (1.5MB)
+Installing collected packages: pip
+  Found existing installation: pip 19.3.1
+    Uninstalling pip-19.3.1:
+      Successfully uninstalled pip-19.3.1
+Successfully installed pip-20.2.3
+Removing intermediate container 63f9ceba9273
+ ---&gt; 2574453abbe2
+Step 6/9 : RUN pip install --no-cache-dir -r requirements.txt
+ ---&gt; Running in 780119f2e3fd
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting itsdangerous&gt;=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Werkzeug&gt;=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting click&gt;=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting Jinja2&gt;=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting MarkupSafe&gt;=0.23
+  Downloading MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl (27 kB)
+Installing collected packages: itsdangerous, Werkzeug, click, MarkupSafe, Jinja2, Flask
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 itsdangerous-1.1.0
+Removing intermediate container 780119f2e3fd
+ ---&gt; dc85014ded2f
+Step 7/9 : EXPOSE 80
+ ---&gt; Running in c4007edd8de9
+Removing intermediate container c4007edd8de9
+ ---&gt; 004cedcebb18
+Step 8/9 : ENV NAME World
+ ---&gt; Running in 5921e7006115
+Removing intermediate container 5921e7006115
+ ---&gt; 1ecdf60bdfa2
+Step 9/9 : CMD ["python", "app.py"]
+ ---&gt; Running in c9780ef6591f
+Removing intermediate container c9780ef6591f
+ ---&gt; dbab8de5e45d
+Successfully built dbab8de5e45d
+Successfully tagged flask_dashboard:v1
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-sh">  docker push de.icr.io/datashield_mahass/flask_dashboard:v1
+</pre>
+</div>
+
+<pre class="example">
+The push refers to repository [de.icr.io/datashield_mahass/flask_dashboard]
+cc6d8796e68b: Pushed 
+f8715e0bcea3: Pushed 
+ee7190eed877: Pushed 
+dac60d802f72: Mounted from datashield_mahass/coursera_workflow 
+5c478a56abb2: Mounted from datashield_mahass/coursera_workflow 
+5ac01c082b52: Mounted from datashield_mahass/coursera_workflow 
+52e609561bfc: Mounted from datashield_mahass/coursera_workflow 
+d7366bbef1d9: Mounted from datashield_mahass/coursera_workflow 
+d7aa66fec7c0: Mounted from datashield_mahass/coursera_workflow 
+2e517d68c391: Mounted from datashield_mahass/coursera_workflow 
+5f3a5adb8e97: Mounted from datashield_mahass/coursera_workflow 
+73bfa217d66f: Mounted from datashield_mahass/coursera_workflow 
+91ecdd7165d3: Mounted from datashield_mahass/coursera_workflow 
+e4b20fcc48f4: Mounted from datashield_mahass/coursera_workflow 
+v1: digest: sha256:d9338d9c2d5231a19742674998a74e604fbe5f89dd80fae008c91be079913531 size: 3270
+</pre>
+
+
+<p>
+You can then verify that your image was uploaded to your IBM cloud
+registry by running
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ibmcloud cr image-list
+</pre>
+</div>
+
+<p>
+Great, you can now convert the image.
+</p>
+
+<p>
+For doing that you can either use the Enclave Manager UI, or
+alternatively use the CLI and send the correct information to the
+Data Shield API.
+</p>
+</div>
+
+<div id="outline-container-org392d9a1" class="outline-3">
+<h3 id="org392d9a1">Via UI</h3>
+<div class="outline-text-3" id="text-org392d9a1">
+<div class="container"> 
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/Oixdcha11h4" frameborder="0" allowfullscreen;> </iframe>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org30bfbed" class="outline-3">
+<h3 id="org30bfbed">Via CLI</h3>
+<div class="outline-text-3" id="text-org30bfbed">
+<p>
+In order to convert the images via CLI you can pass the necessary
+parameters together with an authentication token to the converter API
+endpoint.
+</p>
+
+<p>
+In order to do that you first generate the access token via:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #ff5d38;">export</span> <span style="color: #f8f8f0;">token</span>=<span style="color: #ff5d38; font-weight: bold;">`ibmcloud iam oauth-tokens | awk -F"Bearer " '{print $NF}'`</span>
+<span style="color: #ff5d38;">echo</span> $<span style="color: #f8f8f0;">token</span>
+</pre>
+</div>
+
+<p>
+Then you pass it together with the image name to be converted, the
+image output name as well as the cluster ingress point + api route
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">curl -H <span style="color: #bcd42a;">'Content-Type: application/json'</span> -d <span style="color: #bcd42a;">'{"inputImageName": "de.icr.io/datashield_mahass/flask_dashboard:v1", "outputImageName": "de.icr.io/datashield_mahass/sgx_flask_dashboard:latest"}'</span>  -H <span style="color: #bcd42a;">"Authorization: Basic $token"</span>  https://enclave-manager.mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud/api/v1/tools/converter/convert-app
+</pre>
+</div>
+
+<pre class="example">
+{"isvsvn": 0, "newImage": "de.icr.io/datashield_mahass/sgx_flask_dashboard:latest", "mrenclave": "5a4db6b8730cc48172edbf230ef9e30d49f2021c82cf94bd22824b792d56d850", "imageSize": 1144509494, "imageSHA": "6ba65e6d89fb", "isvprodid": 0, "mrsigner": "83a625398a0ff03a60c31635d3116021de498fe77ef25cb29cb0f0afc98dbd52"}
+</pre>
+
+<p>
+You can finally run the image on your cluster by running the
+deployment and services <code>yaml</code> files in the repository. 
+</p>
+</div>
+</div>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
@@ -1007,7 +1227,7 @@ newly created secret.
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-07 Wed 15:55</p>
+<p class="date">Created: 2020-10-08 Thu 13:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
