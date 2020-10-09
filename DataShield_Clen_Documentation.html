@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-08 Thu 15:41 -->
+<!-- 2020-10-09 Fri 14:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -253,22 +253,22 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org649a854">A quick Overview of the Service</a></li>
-<li><a href="#org3f0e93d">Deploy the Data Shield Service on your Kubernetes Cluster</a>
+<li><a href="#org66b80bb">A quick Overview of the Service</a></li>
+<li><a href="#org65a02d7">Deploy the Data Shield Service on your Kubernetes Cluster</a>
 <ul>
-<li><a href="#org3e1d1a4">Prerequisites</a></li>
-<li><a href="#org8606519">Set up your Kubernetes Cluster</a></li>
-<li><a href="#orgdf7295f">Cluster Configuration</a></li>
-<li><a href="#org0f2b08e">Adding the necessary helm-charts to your Cluster</a></li>
-<li><a href="#org463331b">Creating your image registry on IBM cloud</a></li>
-<li><a href="#org96c2682">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
-<li><a href="#org76c8fc1">Install the IBM Kubernetes Data Shield Chart</a></li>
+<li><a href="#orgd807425">Prerequisites</a></li>
+<li><a href="#org63f4a65">Set up your Kubernetes Cluster</a></li>
+<li><a href="#orge03529b">Cluster Configuration</a></li>
+<li><a href="#org5eeee98">Adding the necessary helm-charts to your Cluster</a></li>
+<li><a href="#orga48086e">Creating your image registry on IBM cloud</a></li>
+<li><a href="#orgf248ac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#orgdb62f0c">Install the IBM Kubernetes Data Shield Chart</a></li>
 </ul>
 </li>
-<li><a href="#orga47c987">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
+<li><a href="#orgcc3fec8">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
 <ul>
-<li><a href="#org0d43a2d">Via UI</a></li>
-<li><a href="#org7e82f82">Via CLI</a></li>
+<li><a href="#orgaf37430">Via UI</a></li>
+<li><a href="#orge49d27c">Via CLI</a></li>
 </ul>
 </li>
 </ul>
@@ -312,9 +312,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-org649a854" class="outline-2">
-<h2 id="org649a854">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-org649a854">
+<div id="outline-container-org66b80bb" class="outline-2">
+<h2 id="org66b80bb">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org66b80bb">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -348,7 +348,7 @@ Through the mentioned partnership, the IBM Data Shield solution will
 make it possible for you to convert any docker image into
 SGX-compliant images in minutes without changing a single line of
 code. It will then be possible for you as an operator to leverage the
-full fledge power of SGX architectures and by deploy runtime encrypted
+full fledge power of SGX architectures and to deploy runtime encrypted
 applications on your kubernetes or <a href="https://www.openshift.com/">openshift</a> cluster in minutes.
 </p>
 
@@ -358,13 +358,13 @@ applications on your kubernetes or <a href="https://www.openshift.com/">openshif
 </div>
 </div>
 
-<div id="outline-container-org3f0e93d" class="outline-2">
-<h2 id="org3f0e93d">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-org3f0e93d">
+<div id="outline-container-org65a02d7" class="outline-2">
+<h2 id="org65a02d7">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-org65a02d7">
 </div>
-<div id="outline-container-org3e1d1a4" class="outline-3">
-<h3 id="org3e1d1a4">Prerequisites</h3>
-<div class="outline-text-3" id="text-org3e1d1a4">
+<div id="outline-container-orgd807425" class="outline-3">
+<h3 id="orgd807425">Prerequisites</h3>
+<div class="outline-text-3" id="text-orgd807425">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -448,9 +448,9 @@ script above.
 </div>
 
 
-<div id="outline-container-org8606519" class="outline-3">
-<h3 id="org8606519">Set up your Kubernetes Cluster</h3>
-<div class="outline-text-3" id="text-org8606519">
+<div id="outline-container-org63f4a65" class="outline-3">
+<h3 id="org63f4a65">Set up your Kubernetes Cluster</h3>
+<div class="outline-text-3" id="text-org63f4a65">
 <p>
 Notice: In order to leverage the IBM Data Shield service, it will
 be necessary for you to deploy a bare metal Kubernetes cluster
@@ -467,9 +467,9 @@ i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
 </div>
 
 
-<div id="outline-container-orgdf7295f" class="outline-3">
-<h3 id="orgdf7295f">Cluster Configuration</h3>
-<div class="outline-text-3" id="text-orgdf7295f">
+<div id="outline-container-orge03529b" class="outline-3">
+<h3 id="orge03529b">Cluster Configuration</h3>
+<div class="outline-text-3" id="text-orge03529b">
 <p>
 After provisioning the above cluster you should receive an E-mail a
 couple of hours later, when your cluster is up and running.
@@ -579,9 +579,9 @@ Resource Group Name:            Default
 </div>
 
 
-<div id="outline-container-org0f2b08e" class="outline-3">
-<h3 id="org0f2b08e">Adding the necessary helm-charts to your Cluster</h3>
-<div class="outline-text-3" id="text-org0f2b08e">
+<div id="outline-container-org5eeee98" class="outline-3">
+<h3 id="org5eeee98">Adding the necessary helm-charts to your Cluster</h3>
+<div class="outline-text-3" id="text-org5eeee98">
 <p>
 For running datashield, you will then be asked to install a couple of
 helm charts on your cluster. These will be necessary for the proper
@@ -681,9 +681,9 @@ chart in the cert-manager namespace
 </div>
 
 
-<div id="outline-container-org463331b" class="outline-3">
-<h3 id="org463331b">Creating your image registry on IBM cloud</h3>
-<div class="outline-text-3" id="text-org463331b">
+<div id="outline-container-orga48086e" class="outline-3">
+<h3 id="orga48086e">Creating your image registry on IBM cloud</h3>
+<div class="outline-text-3" id="text-orga48086e">
 <p>
 So far so good.
 </p>
@@ -771,9 +771,9 @@ on your registry
 </div>
 </div>
 
-<div id="outline-container-org96c2682" class="outline-3">
-<h3 id="org96c2682">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
-<div class="outline-text-3" id="text-org96c2682">
+<div id="outline-container-orgf248ac6" class="outline-3">
+<h3 id="orgf248ac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
+<div class="outline-text-3" id="text-orgf248ac6">
 <p>
 In this section you will create a IAM service-id and give it a
 reader and writer permission to operate on your cluster. You will
@@ -841,7 +841,10 @@ to your cluster with the IAM service
 </div>
 
 <p>
-Create a Kubernetes secret to be used for future conversions. 
+Create a Kubernetes secret to be used for future
+conversions. Notice that you will have to replace the <code>&lt;ENTER YOUR
+   CONTAINER REGISTRY REGION HERE&gt;</code> and the <code>&lt;ENTER HERE YOUR API KEY
+   FOR THE IAM SERVICE ABOVE&gt;</code> strings from the snippet below.
 </p>
 
 <div class="org-src-container">
@@ -888,9 +891,9 @@ running
 </div>
 
 
-<div id="outline-container-org76c8fc1" class="outline-3">
-<h3 id="org76c8fc1">Install the IBM Kubernetes Data Shield Chart</h3>
-<div class="outline-text-3" id="text-org76c8fc1">
+<div id="outline-container-orgdb62f0c" class="outline-3">
+<h3 id="orgdb62f0c">Install the IBM Kubernetes Data Shield Chart</h3>
+<div class="outline-text-3" id="text-orgdb62f0c">
 <p>
 Good, you are all set. You can now get the necessary information
 about your cluster and install the Data Shield Chart on your
@@ -961,7 +964,7 @@ mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.a
 
 <p>
 Finally install the datashield chart in the default namespace of your
-cluster (recall to insert the HEX number of the account in the below snippet)
+cluster (recall to insert the <code>HEX number</code> of the account in the below snippet)
 </p>
 
 <div class="org-src-container">
@@ -1031,9 +1034,9 @@ Documentation may be found at https://console.bluemix.net/docs/services/data-shi
 </div>
 </div>
 
-<div id="outline-container-orga47c987" class="outline-2">
-<h2 id="orga47c987">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
-<div class="outline-text-2" id="text-orga47c987">
+<div id="outline-container-orgcc3fec8" class="outline-2">
+<h2 id="orgcc3fec8">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
+<div class="outline-text-2" id="text-orgcc3fec8">
 <p>
 Good now that your cluster is up an running with the data shield
 service you can convert a docker image of your choice.
@@ -1167,18 +1170,18 @@ Data Shield API.
 </p>
 </div>
 
-<div id="outline-container-org0d43a2d" class="outline-3">
-<h3 id="org0d43a2d">Via UI</h3>
-<div class="outline-text-3" id="text-org0d43a2d">
+<div id="outline-container-orgaf37430" class="outline-3">
+<h3 id="orgaf37430">Via UI</h3>
+<div class="outline-text-3" id="text-orgaf37430">
 <div class="container"> 
   <iframe class="responsive-iframe" src="https://www.youtube.com/embed/Oixdcha11h4" frameborder="0" allowfullscreen;> </iframe>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7e82f82" class="outline-3">
-<h3 id="org7e82f82">Via CLI</h3>
-<div class="outline-text-3" id="text-org7e82f82">
+<div id="outline-container-orge49d27c" class="outline-3">
+<h3 id="orge49d27c">Via CLI</h3>
+<div class="outline-text-3" id="text-orge49d27c">
 <p>
 In order to convert the images via CLI you can pass the necessary
 parameters together with an authentication token to the converter API
@@ -1217,7 +1220,9 @@ previously defined):
 
 <p>
 You can finally run the image on your cluster by running the
-deployment and services <code>yaml</code> files in the repository.
+deployment and services <code>yaml</code> files in the repository. Notice,
+though, that you will have to change the url of the image referenced
+in such files.
 </p>
 
 <div class="org-src-container">
@@ -1282,7 +1287,7 @@ newly created secret.
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-08 Thu 15:41</p>
+<p class="date">Created: 2020-10-09 Fri 14:30</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
