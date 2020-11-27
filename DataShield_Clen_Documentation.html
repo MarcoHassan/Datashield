@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-09 Fri 14:30 -->
+<!-- 2020-11-27 Fri 14:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DataShield - Run your Docker images in Software Guard Extensions Enclaves and Protect your Application at Runtime</title>
@@ -193,12 +193,12 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -253,22 +253,22 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org66b80bb">A quick Overview of the Service</a></li>
-<li><a href="#org65a02d7">Deploy the Data Shield Service on your Kubernetes Cluster</a>
+<li><a href="#org55c07d7">A quick Overview of the Service</a></li>
+<li><a href="#org4c9513e">Deploy the Data Shield Service on your Kubernetes Cluster</a>
 <ul>
-<li><a href="#orgd807425">Prerequisites</a></li>
-<li><a href="#org63f4a65">Set up your Kubernetes Cluster</a></li>
-<li><a href="#orge03529b">Cluster Configuration</a></li>
-<li><a href="#org5eeee98">Adding the necessary helm-charts to your Cluster</a></li>
-<li><a href="#orga48086e">Creating your image registry on IBM cloud</a></li>
-<li><a href="#orgf248ac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
-<li><a href="#orgdb62f0c">Install the IBM Kubernetes Data Shield Chart</a></li>
+<li><a href="#org9f8181d">Prerequisites</a></li>
+<li><a href="#orgf2ffa81">set up your Kubernetes Cluster</a></li>
+<li><a href="#org7d35bec">Cluster Configuration</a></li>
+<li><a href="#orgc272f6a">Adding the necessary helm-charts to your Cluster</a></li>
+<li><a href="#org2261a0c">Creating your image registry on IBM cloud</a></li>
+<li><a href="#org3f9417c">Create a Kubectl Secret to interact with your Cluster at a later stage.</a></li>
+<li><a href="#org6b91433">Install the IBM Kubernetes Data Shield Chart</a></li>
 </ul>
 </li>
-<li><a href="#orgcc3fec8">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
+<li><a href="#org067eff9">Convert an image into a SGX-complaint image and deploy it on your cluster</a>
 <ul>
-<li><a href="#orgaf37430">Via UI</a></li>
-<li><a href="#orge49d27c">Via CLI</a></li>
+<li><a href="#org3d6c019">Via UI</a></li>
+<li><a href="#orge68f920">Via CLI</a></li>
 </ul>
 </li>
 </ul>
@@ -312,9 +312,9 @@ documentation</a> to the present state - October 2020.</i>
 <br>
 <br>
 
-<div id="outline-container-org66b80bb" class="outline-2">
-<h2 id="org66b80bb">A quick Overview of the Service</h2>
-<div class="outline-text-2" id="text-org66b80bb">
+<div id="outline-container-org55c07d7" class="outline-2">
+<h2 id="org55c07d7">A quick Overview of the Service</h2>
+<div class="outline-text-2" id="text-org55c07d7">
 <p>
 The essential idea of IBM Data Shield is the one of partnering with
 Fortanix to offer an easy to use service in order to protect your
@@ -358,13 +358,13 @@ applications on your kubernetes or <a href="https://www.openshift.com/">openshif
 </div>
 </div>
 
-<div id="outline-container-org65a02d7" class="outline-2">
-<h2 id="org65a02d7">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
-<div class="outline-text-2" id="text-org65a02d7">
+<div id="outline-container-org4c9513e" class="outline-2">
+<h2 id="org4c9513e">Deploy the Data Shield Service on your Kubernetes Cluster</h2>
+<div class="outline-text-2" id="text-org4c9513e">
 </div>
-<div id="outline-container-orgd807425" class="outline-3">
-<h3 id="orgd807425">Prerequisites</h3>
-<div class="outline-text-3" id="text-orgd807425">
+<div id="outline-container-org9f8181d" class="outline-3">
+<h3 id="org9f8181d">Prerequisites</h3>
+<div class="outline-text-3" id="text-org9f8181d">
 <p>
 Install the <i><a href="https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started">IBM CLI</a></i>
 </p>
@@ -415,7 +415,7 @@ A good place to get started in this sense is to login in the IBM cloud via CLI t
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  ibmcloud login <span style="color: #51afef;">[</span>-a API_ENDPOINT<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--sso<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-u USERNAME<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-p PASSWORD<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--apikey KEY | @KEY_FILE<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>--no-iam<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-c <span style="color: #c678dd;">(</span>ACCOUNT_ID | ACCOUNT_OWNER_USER_ID<span style="color: #c678dd;">)</span> | --no-account<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-g <span style="color: #c678dd;">(</span>RESOURCE_GROUP_NAME | RESOURCE_GROUP_ID<span style="color: #c678dd;">)</span><span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-r REGION | --no-region<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-o ORG<span style="color: #51afef;">]</span> <span style="color: #51afef;">[</span>-s SPACE<span style="color: #51afef;">]</span>
+<pre class="src src-sh">  ibmcloud login <span style="color: #AE81FF;">[</span>-a API_ENDPOINT<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>--sso<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-u USERNAME<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-p PASSWORD<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>--apikey KEY | @KEY_FILE<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>--no-iam<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-c <span style="color: #66D9EF;">(</span>ACCOUNT_ID | ACCOUNT_OWNER_USER_ID<span style="color: #66D9EF;">)</span> | --no-account<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-g <span style="color: #66D9EF;">(</span>RESOURCE_GROUP_NAME | RESOURCE_GROUP_ID<span style="color: #66D9EF;">)</span><span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-r REGION | --no-region<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-o ORG<span style="color: #AE81FF;">]</span> <span style="color: #AE81FF;">[</span>-s SPACE<span style="color: #AE81FF;">]</span>
 </pre>
 </div>
 
@@ -424,7 +424,7 @@ and look at the available <i>plug-ins</i>, the installed ones and the <i>availab
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  ibmcloud plugin repo-plugins -r <span style="color: #bcd42a;">"IBM Cloud"</span>
+<pre class="src src-sh">  ibmcloud plugin repo-plugins -r <span style="color: #e67128;">"IBM Cloud"</span>
 </pre>
 </div>
 
@@ -448,9 +448,9 @@ script above.
 </div>
 
 
-<div id="outline-container-org63f4a65" class="outline-3">
-<h3 id="org63f4a65">Set up your Kubernetes Cluster</h3>
-<div class="outline-text-3" id="text-org63f4a65">
+<div id="outline-container-orgf2ffa81" class="outline-3">
+<h3 id="orgf2ffa81">set up your Kubernetes Cluster</h3>
+<div class="outline-text-3" id="text-orgf2ffa81">
 <p>
 Notice: In order to leverage the IBM Data Shield service, it will
 be necessary for you to deploy a bare metal Kubernetes cluster
@@ -467,9 +467,9 @@ i.e. either the <code>mb2c.4x32</code> cluster as done in this demo, or the
 </div>
 
 
-<div id="outline-container-orge03529b" class="outline-3">
-<h3 id="orge03529b">Cluster Configuration</h3>
-<div class="outline-text-3" id="text-orge03529b">
+<div id="outline-container-org7d35bec" class="outline-3">
+<h3 id="org7d35bec">Cluster Configuration</h3>
+<div class="outline-text-3" id="text-org7d35bec">
 <p>
 After provisioning the above cluster you should receive an E-mail a
 couple of hours later, when your cluster is up and running.
@@ -579,9 +579,9 @@ Resource Group Name:            Default
 </div>
 
 
-<div id="outline-container-org5eeee98" class="outline-3">
-<h3 id="org5eeee98">Adding the necessary helm-charts to your Cluster</h3>
-<div class="outline-text-3" id="text-org5eeee98">
+<div id="outline-container-orgc272f6a" class="outline-3">
+<h3 id="orgc272f6a">Adding the necessary helm-charts to your Cluster</h3>
+<div class="outline-text-3" id="text-orgc272f6a">
 <p>
 For running datashield, you will then be asked to install a couple of
 helm charts on your cluster. These will be necessary for the proper
@@ -658,7 +658,7 @@ Install the cert-manager chart in the cert-manager namespace
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">helm repo update &amp;&amp; helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.10.1 --set <span style="color: #f8f8f0;">extraArgs</span><span style="color: #51afef;">[</span>0<span style="color: #51afef;">]</span>=<span style="color: #bcd42a;">"--enable-certificate-owner-ref=true"</span> --set webhook.enabled=false
+<pre class="src src-sh">helm repo update &amp;&amp; helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.10.1 --set <span style="color: #dbdb95;">extraArgs</span><span style="color: #AE81FF;">[</span>0<span style="color: #AE81FF;">]</span>=<span style="color: #e67128;">"--enable-certificate-owner-ref=true"</span> --set webhook.enabled=false
 </pre>
 </div>
 
@@ -681,9 +681,9 @@ chart in the cert-manager namespace
 </div>
 
 
-<div id="outline-container-orga48086e" class="outline-3">
-<h3 id="orga48086e">Creating your image registry on IBM cloud</h3>
-<div class="outline-text-3" id="text-orga48086e">
+<div id="outline-container-org2261a0c" class="outline-3">
+<h3 id="org2261a0c">Creating your image registry on IBM cloud</h3>
+<div class="outline-text-3" id="text-org2261a0c">
 <p>
 So far so good.
 </p>
@@ -771,9 +771,10 @@ on your registry
 </div>
 </div>
 
-<div id="outline-container-orgf248ac6" class="outline-3">
-<h3 id="orgf248ac6">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
-<div class="outline-text-3" id="text-orgf248ac6">
+
+<div id="outline-container-org3f9417c" class="outline-3">
+<h3 id="org3f9417c">Create a Kubectl Secret to interact with your Cluster at a later stage.</h3>
+<div class="outline-text-3" id="text-org3f9417c">
 <p>
 In this section you will create a IAM service-id and give it a
 reader and writer permission to operate on your cluster. You will
@@ -794,7 +795,7 @@ Create a IAM service to interact with your cluster
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  ibmcloud iam service-id-create data-shield-container-converter -d <span style="color: #bcd42a;">'IBM Cloud Data Shield Container Converter'</span>
+<pre class="src src-sh">  ibmcloud iam service-id-create data-shield-container-converter -d <span style="color: #e67128;">'IBM Cloud Data Shield Container Converter'</span>
 </pre>
 </div>
 
@@ -803,7 +804,7 @@ Create an Api-key for that service
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  ibmcloud iam service-api-key-create <span style="color: #bcd42a;">'IBM Cloud Data Shield Container Converter'</span> data-shield-container-converter
+<pre class="src src-sh">  ibmcloud iam service-api-key-create <span style="color: #e67128;">'IBM Cloud Data Shield Container Converter'</span> data-shield-container-converter
 </pre>
 </div>
 
@@ -848,7 +849,7 @@ conversions. Notice that you will have to replace the <code>&lt;ENTER YOUR
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  <span style="color: #51afef;">(</span><span style="color: #ff5d38;">echo</span> -n <span style="color: #bcd42a;">'{"auths":{"&lt;ENTER YOUR CONTAINER REGISTRY REGION HERE&gt;.icr.io":{"auth":"'</span>; <span style="color: #ff5d38;">echo</span> -n <span style="color: #bcd42a;">'iamapikey:&lt;ENTER HERE YOUR API KEY FOR THE IAM SERVICE ABOVE&gt;'</span> | openssl base64 -A;  <span style="color: #ff5d38;">echo</span> <span style="color: #bcd42a;">'"}}}'</span><span style="color: #51afef;">)</span> | kubectl create secret generic converter-docker-config --from-file=.dockerconfigjson=/dev/stdin
+<pre class="src src-sh">  <span style="color: #AE81FF;">(</span><span style="color: #23d7d7;">echo</span> -n <span style="color: #e67128;">'{"auths":{"&lt;ENTER YOUR CONTAINER REGISTRY REGION HERE&gt;.icr.io":{"auth":"'</span>; <span style="color: #23d7d7;">echo</span> -n <span style="color: #e67128;">'iamapikey:&lt;ENTER HERE YOUR API KEY FOR THE IAM SERVICE ABOVE&gt;'</span> | openssl base64 -A;  <span style="color: #23d7d7;">echo</span> <span style="color: #e67128;">'"}}}'</span><span style="color: #AE81FF;">)</span> | kubectl create secret generic converter-docker-config --from-file=.dockerconfigjson=/dev/stdin
 </pre>
 </div>
 
@@ -865,7 +866,7 @@ running
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  kubectl create secret generic converter-docker-config
+<pre class="src src-sh">  kubectl get secret -ojson converter-docker-config
 </pre>
 </div>
 
@@ -891,9 +892,9 @@ running
 </div>
 
 
-<div id="outline-container-orgdb62f0c" class="outline-3">
-<h3 id="orgdb62f0c">Install the IBM Kubernetes Data Shield Chart</h3>
-<div class="outline-text-3" id="text-orgdb62f0c">
+<div id="outline-container-org6b91433" class="outline-3">
+<h3 id="org6b91433">Install the IBM Kubernetes Data Shield Chart</h3>
+<div class="outline-text-3" id="text-org6b91433">
 <p>
 Good, you are all set. You can now get the necessary information
 about your cluster and install the Data Shield Chart on your
@@ -952,9 +953,9 @@ will use it extensively throughout the next sections.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  <span style="color: #f8f8f0;">subdomain_ingress</span>=<span style="color: #bcd42a;">"mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud"</span>
+<pre class="src src-sh">  <span style="color: #dbdb95;">subdomain_ingress</span>=<span style="color: #e67128;">"mycluster-fra02-mb2c-da-f9bf7c7800de9856ddeffe14aad922a5-0000.eu-de.containers.appdomain.cloud"</span>
 
-  <span style="color: #ff5d38;">echo</span> $<span style="color: #f8f8f0;">subdomain_ingress</span>
+  <span style="color: #23d7d7;">echo</span> $<span style="color: #dbdb95;">subdomain_ingress</span>
 </pre>
 </div>
 
@@ -968,7 +969,7 @@ cluster (recall to insert the <code>HEX number</code> of the account in the belo
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">helm install myshield iks-charts/ibmcloud-data-shield --set enclaveos-chart.Manager.AdminEmail=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminName=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminIBMAccountId=&lt;ENTER PREVIOUSLY OBTAINED HEX&gt; --set global.IngressDomain=$<span style="color: #f8f8f0;">subdomain_ingress</span> --set converter-chart.Converter.DockerConfigSecret=converter-docker-config
+<pre class="src src-sh">helm install myshield iks-charts/ibmcloud-data-shield --set enclaveos-chart.Manager.AdminEmail=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminName=Marco.Hassan@ibm.com --set enclaveos-chart.Manager.AdminIBMAccountId=&lt;ENTER PREVIOUSLY OBTAINED HEX&gt; --set global.IngressDomain=$<span style="color: #dbdb95;">subdomain_ingress</span> --set converter-chart.Converter.DockerConfigSecret=converter-docker-config
 </pre>
 </div>
 
@@ -1034,9 +1035,9 @@ Documentation may be found at https://console.bluemix.net/docs/services/data-shi
 </div>
 </div>
 
-<div id="outline-container-orgcc3fec8" class="outline-2">
-<h2 id="orgcc3fec8">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
-<div class="outline-text-2" id="text-orgcc3fec8">
+<div id="outline-container-org067eff9" class="outline-2">
+<h2 id="org067eff9">Convert an image into a SGX-complaint image and deploy it on your cluster</h2>
+<div class="outline-text-2" id="text-org067eff9">
 <p>
 Good now that your cluster is up an running with the data shield
 service you can convert a docker image of your choice.
@@ -1062,7 +1063,7 @@ First of all download the repository, then within it you can run
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">  <span style="color: #5B6268;">## </span><span style="color: #5B6268;">in the my_datashield_image repository with the Dockerfile</span>
+<pre class="src src-sh">  <span style="color: #75715E;">## </span><span style="color: #74af68;">in the my_datashield_image repository with the Dockerfile</span>
   docker build -t de.icr.io/datashield_mahass/falsk_dashboard:v1 .
 </pre>
 </div>
@@ -1170,18 +1171,18 @@ Data Shield API.
 </p>
 </div>
 
-<div id="outline-container-orgaf37430" class="outline-3">
-<h3 id="orgaf37430">Via UI</h3>
-<div class="outline-text-3" id="text-orgaf37430">
+<div id="outline-container-org3d6c019" class="outline-3">
+<h3 id="org3d6c019">Via UI</h3>
+<div class="outline-text-3" id="text-org3d6c019">
 <div class="container"> 
   <iframe class="responsive-iframe" src="https://www.youtube.com/embed/Oixdcha11h4" frameborder="0" allowfullscreen;> </iframe>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge49d27c" class="outline-3">
-<h3 id="orge49d27c">Via CLI</h3>
-<div class="outline-text-3" id="text-orge49d27c">
+<div id="outline-container-orge68f920" class="outline-3">
+<h3 id="orge68f920">Via CLI</h3>
+<div class="outline-text-3" id="text-orge68f920">
 <p>
 In order to convert the images via CLI you can pass the necessary
 parameters together with an authentication token to the converter API
@@ -1193,8 +1194,8 @@ In order to do that you first generate the access token via:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #ff5d38;">export</span> <span style="color: #f8f8f0;">token</span>=<span style="color: #ff5d38; font-weight: bold;">`ibmcloud iam oauth-tokens | awk -F"Bearer " '{print $NF}'`</span>
-<span style="color: #ff5d38;">echo</span> $<span style="color: #f8f8f0;">token</span>
+<pre class="src src-sh"><span style="color: #23d7d7;">export</span> <span style="color: #dbdb95;">token</span>=<span style="color: #AE81FF; font-weight: bold;">`ibmcloud iam oauth-tokens | awk -F"Bearer " '{print $NF}'`</span>
+<span style="color: #23d7d7;">echo</span> $<span style="color: #dbdb95;">token</span>
 </pre>
 </div>
 
@@ -1210,7 +1211,7 @@ previously defined):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">curl -H <span style="color: #bcd42a;">'Content-Type: application/json'</span> -d <span style="color: #bcd42a;">'{"inputImageName": "de.icr.io/datashield_mahass/flask_dashboard:v1", "outputImageName": "de.icr.io/datashield_mahass/sgx_flask_dashboard:latest"}'</span>  -H <span style="color: #bcd42a;">"Authorization: Basic $token"</span>  https://enclave-manager.$<span style="color: #f8f8f0;">subdomain_ingress</span>/api/v1/tools/converter/convert-app
+<pre class="src src-sh">curl -H <span style="color: #e67128;">'Content-Type: application/json'</span> -d <span style="color: #e67128;">'{"inputImageName": "de.icr.io/datashield_mahass/flask_dashboard:v1", "outputImageName": "de.icr.io/datashield_mahass/sgx_flask_dashboard:latest"}'</span>  -H <span style="color: #e67128;">"Authorization: Basic $token"</span>  https://enclave-manager.$<span style="color: #dbdb95;">subdomain_ingress</span>/api/v1/tools/converter/convert-app
 </pre>
 </div>
 
@@ -1285,9 +1286,8 @@ newly created secret.
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="date">Date: 2020-10-07</p>
 <p class="author">Author: Marco Hassan</p>
-<p class="date">Created: 2020-10-09 Fri 14:30</p>
+<p class="date">Created: 2020-11-27 Fri 14:46</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
